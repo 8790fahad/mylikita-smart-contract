@@ -1,89 +1,128 @@
 import { PersistentUnorderedMap, context } from "near-sdk-as";
-export const listedDrug = new PersistentUnorderedMap<string, Drug>(
-  "LISTED_PRODUCTS"
-);
+
 @nearBindgen
-export class Drug {
+export class PatientRecords {
+  facilityId: string;
+  title: string;
+  accountType: string;
+  surname: string;
+  firstname: string;
+  other: string;
+  gender: string;
+  age: u64;
+  maritalStatus: string;
+  DOB: string;
+  dateCreated: string;
+  phoneNumber: string;
+  email: string;
+  state: string;
+  lga: string;
+  occupation: string;
+  address: string;
+  kinName: string;
+  kinRelationship: string;
+  kinPhone: string;
+  kinEmail: string;
+  kinAddress: string;
+  accountNo: string;
+  beneficiaryNo: string;
   balance: u32;
-  drug_name: string;
-  price: u64;
-  expiry_date: string;
-  selling_price: u64;
-  supplier_name: string;
-  generic_name: string;
-  reorder_level:u32;
-  image: string;
-  unit_of_issue: u32;
-  drug_code: string;
-  insert_time: string;
+  id: string;
+  patientId: string;
+  enteredBy: string;
+  patientStatus: string;
+  assigned_to: string;
+  createdAt: string;
+  date_assigned: string;
+  status: string;
+  hematology: string;
+  microbiology: string;
+  chem_path: string;
+  radiology: string;
+  seen_by: string;
+  date_seen: string;
   owner: string;
-  public static fromPayload(payload: Drug): Drug {
-    const product = new Drug();
-    product.drug_code = payload.drug_code;
-    product.balance = payload.balance;
-    product.image = payload.image;
-    product.drug_name = payload.drug_name;
-    product.price = payload.price;
-    product.expiry_date = payload.expiry_date;
-    product.selling_price = payload.selling_price;
-    product.supplier_name = payload.supplier_name;
-    product.generic_name = payload.generic_name;
-    product.unit_of_issue = payload.unit_of_issue;
-    product.insert_time = payload.insert_time;
-    product.reorder_level=payload.reorder_level;
-    product.owner = context.sender;
-    return product;
-  }
-
-  public   increaseDrug(qty: u32,drug_code:string): void {
-    const drug = listedDrug.get(drug_code);
-    if (drug == null) throw new Error("product not found");
-    else drug.balance = drug.balance+qty;
-    listedDrug.set(drug.drug_code, drug);
-  }
-  public   decreaseDrug(qty: u32,drug_code:string): void {
-    const drug = listedDrug.get(drug_code);
-    if (drug == null) throw new Error("product not found");
-    else drug.balance = drug.balance-qty;
-    listedDrug.set(drug.drug_code, drug);
-  }
-  public static updateDrugSellingPrice(
-    drug_code: string,
-    new_price: u64
-  ): void {
-    const drug = listedDrug.get(drug_code);
-    if (drug == null) throw new Error("product not found");
-    else drug.selling_price = new_price;
-    listedDrug.set(drug.drug_code, drug);
+  public static fromPayload(payload: PatientRecords): PatientRecords {
+    const patientRecord = new PatientRecords();
+    patientRecord.facilityId = payload.facilityId;
+    patientRecord.title = payload.title;
+    patientRecord.accountType = payload.accountType;
+    patientRecord.surname = payload.surname;
+    patientRecord.firstname = payload.firstname;
+    patientRecord.other = payload.other;
+    patientRecord.gender = payload.gender;
+    patientRecord.age = payload.age;
+    patientRecord.maritalStatus = payload.maritalStatus;
+    patientRecord.DOB = payload.DOB;
+    patientRecord.dateCreated = payload.dateCreated;
+    patientRecord.phoneNumber = payload.phoneNumber;
+    patientRecord.email = payload.email;
+    patientRecord.state = payload.state;
+    patientRecord.lga = payload.lga;
+    patientRecord.occupation = payload.occupation;
+    patientRecord.address = payload.address;
+    patientRecord.kinName = payload.kinName;
+    patientRecord.kinRelationship = payload.kinRelationship;
+    patientRecord.kinPhone = payload.kinPhone;
+    patientRecord.kinEmail = payload.kinEmail;
+    patientRecord.kinAddress = payload.kinAddress;
+    patientRecord.accountNo = payload.accountNo;
+    patientRecord.beneficiaryNo = payload.beneficiaryNo;
+    patientRecord.balance = payload.balance;
+    patientRecord.id = payload.id;
+    patientRecord.patientId = payload.patientId;
+    patientRecord.enteredBy = payload.enteredBy;
+    patientRecord.patientStatus = payload.patientStatus;
+    patientRecord.assigned_to = payload.assigned_to;
+    patientRecord.createdAt = payload.createdAt;
+    patientRecord.date_assigned = payload.date_assigned;
+    patientRecord.status = payload.status;
+    patientRecord.seen_by = payload.seen_by;
+    patientRecord.date_seen = payload.date_seen;
+    patientRecord.owner = context.sender;
+    return patientRecord;
   }
 }
 
 @nearBindgen
-export class DrugListEntries {
-  receive_date: string;
-  drug_name: string;
-  qty_in: u32;
-  qty_out: u32;
-  drug_code: string;
-  expiry_date: string;
-  selling_price: u64;
-  insert_time: string;
-  owner: string;
-  public static fromPayload(payload: DrugListEntries): DrugListEntries {
-    const drug_list_entries = new DrugListEntries();
-    drug_list_entries.receive_date = payload.receive_date;
-    drug_list_entries.drug_name = payload.drug_name;
-    drug_list_entries.qty_in = payload.qty_in;
-    drug_list_entries.qty_out = payload.qty_out;
-    drug_list_entries.drug_code = payload.drug_code;
-    drug_list_entries.expiry_date = payload.expiry_date;
-    drug_list_entries.selling_price = payload.selling_price;
-    drug_list_entries.insert_time = payload.insert_time;
-    drug_list_entries.owner = context.sender;
-    return drug_list_entries;
+export class Consultations {
+  id: string;
+  patient_id: string;
+  userId: string;
+  consultation_notes: string;
+  treatmentPlan: string;
+  decision: string;
+  dressing_request: string;
+  nursing_request: string;
+  nursing_request_status: string;
+  facilityId: string;
+  created_at: string;
+  treatment_plan_status: string;
+  treated_by: string;
+  public static fromPayload(payload: Consultations): Consultations {
+    const consultations = new Consultations();
+    consultations.id = payload.id;
+    consultations.patient_id = payload.patient_id;
+    consultations.userId = payload.userId;
+    consultations.consultation_notes = payload.consultation_notes;
+    consultations.treatmentPlan = payload.treatmentPlan;
+    consultations.decision = payload.decision;
+    consultations.dressing_request = payload.dressing_request;
+    consultations.nursing_request = payload.nursing_request;
+    consultations.nursing_request_status = payload.nursing_request_status;
+    consultations.facilityId = payload.facilityId;
+    consultations.created_at = payload.created_at;
+    consultations.treatment_plan_status = payload.treatment_plan_status;
+    consultations.treated_by = payload.treated_by;
+    return consultations;
   }
 }
 
-export const drugEntries = new PersistentUnorderedMap<string, DrugListEntries>(
-  "DRUG_ENTRIES"
+export const consultations = new PersistentUnorderedMap<string, Consultations>(
+  "CONSULTATIONS"
 );
+
+export const patientRecords = new PersistentUnorderedMap<
+  string,
+  PatientRecords
+>("PATIENT-RECORDS");
