@@ -24,9 +24,9 @@ export class PatientRecords {
   kinPhone: string;
   kinEmail: string;
   kinAddress: string;
-  accountNo: string;
-  beneficiaryNo: string;
-  balance: u32;
+  accountNo: 	i32;
+  beneficiaryNo: 	i32;
+  balance: string;
   id: string;
   patientId: string;
   enteredBy: string;
@@ -45,7 +45,7 @@ export class PatientRecords {
   public static fromPayload(payload: PatientRecords): PatientRecords {
     const patientRecord = new PatientRecords();
     patientRecord.facilityId = payload.facilityId;
-    patientRecord.title = payload.title;
+    // patientRecord.title = payload.title;
     patientRecord.accountType = payload.accountType;
     patientRecord.surname = payload.surname;
     patientRecord.firstname = payload.firstname;
@@ -81,7 +81,7 @@ export class PatientRecords {
     patientRecord.date_seen = payload.date_seen;
     patientRecord.owner = context.sender;
     return patientRecord;
-  }
+  };
 }
 
 @nearBindgen
@@ -126,3 +126,4 @@ export const patientRecords = new PersistentUnorderedMap<
   string,
   PatientRecords
 >("PATIENT-RECORDS");
+
