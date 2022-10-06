@@ -89,20 +89,6 @@ export function updatePatientRecord(
   patientRecords.set(obj.id, obj);
 }
 
-// add consultation record
-export function setConsultation(consultation: Consultations): void {
-  let _consultation = consultations.get(consultation.id);
-  if (_consultation !== null) {
-    throw new Error(`a consultation with ${consultation.id} already exists`);
-  }
-  consultations.set(consultation.id, Consultations.fromPayload(consultation));
-}
-
-// get all patient records
-export function getConsultationHistory(): Consultations[] | null {
-  return consultations.values();
-}
-
 export function getAssignPatient(): PatientRecords[] | null {
   let arr: PatientRecords[];
   for (let i = 0, k = patientRecords.length; i < k; ++i) {
@@ -118,4 +104,26 @@ export function getAssignPatient(): PatientRecords[] | null {
   // }
   // }
   return patientRecords.values();
+}
+
+// add consultation record
+export function setConsultation(consultation: Consultations): void {
+  let _consultation = consultations.get(consultation.id);
+  if (_consultation !== null) {
+    throw new Error(`a consultation with ${consultation.id} already exists`);
+  }
+  assert(
+    consultation.consultation_notes.length <= 0,
+    "Please consultation note is required"
+  );
+  assert(
+    consultation.treatmentPlan.length <= 0,
+    "Please treatment plan is required"
+  );
+  consultations.set(consultation.id, Consultations.fromPayload(consultation));
+}
+
+// get all patient records
+export function getConsultationHistory(): Consultations[] | null {
+  return consultations.values();
 }
